@@ -8,7 +8,7 @@ Areas affected by lag comepnsation:
  - Eating food items
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6313726359a1c15ee1d4d93b872849a1535539e1..7e5adfddced650cf227b540f3b40573cdf5b0f7c 100644
+index 93ebdbfad4f9f300f31a124d8d4b36c4f5ce382c..a2875f7cdfb6b43ed59cff41ab4122a08c4cc57f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -322,6 +322,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -19,7 +19,7 @@ index 6313726359a1c15ee1d4d93b872849a1535539e1..7e5adfddced650cf227b540f3b40573c
  
      public static <S extends MinecraftServer> S spin(Function<Thread, S> serverFactory) {
          AtomicReference<S> atomicreference = new AtomicReference();
-@@ -1764,6 +1765,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1765,6 +1766,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              worldserver.hasPhysicsEvent = org.bukkit.event.block.BlockPhysicsEvent.getHandlerList().getRegisteredListeners().length > 0; // Paper - BlockPhysicsEvent
              worldserver.hasEntityMoveEvent = io.papermc.paper.event.entity.EntityMoveEvent.getHandlerList().getRegisteredListeners().length > 0; // Paper - Add EntityMoveEvent
              net.minecraft.world.level.block.entity.HopperBlockEntity.skipHopperEvents = worldserver.paperConfig().hopper.disableMoveEvent || org.bukkit.event.inventory.InventoryMoveItemEvent.getHandlerList().getRegisteredListeners().length == 0; // Paper - Perf: Optimize Hoppers
@@ -28,10 +28,10 @@ index 6313726359a1c15ee1d4d93b872849a1535539e1..7e5adfddced650cf227b540f3b40573c
              this.profiler.push(() -> {
                  String s = String.valueOf(worldserver);
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 472655c55b1f5c213da9b6c1940a353bafdac509..86288143a54e1d786672a81c05698b37fa5d8de2 100644
+index 3f1428b282987e1c4cd2fb5b035df5170cd09e00..415b7839544d269a562b2bceeaa416a1a89be96e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -528,6 +528,17 @@ public class ServerLevel extends Level implements WorldGenLevel, ca.spottedleaf.
+@@ -485,6 +485,17 @@ public class ServerLevel extends Level implements WorldGenLevel, ca.spottedleaf.
          return this.entityTickingChunks;
      }
      // Paper end - rewrite chunk system
